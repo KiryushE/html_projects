@@ -13,6 +13,13 @@ students = [
     {"id": 4, "name": "Dmytro", "score": 15},
 ]
 
+books_list = [
+    {"id": 1, "name": "Book1", "status": "🔍Читаю"},
+    {"id": 2, "name": "Book2", "status": "🗑Кинув"},
+    {"id": 3, "name": "Book3", "status": "🔍Читаю"},
+    {"id": 4, "name": "Book4", "status": "📋В планах"},
+]
+
 
 @app.route('/students/')
 def home():
@@ -29,6 +36,18 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route("/books")
+def books():
+    return render_template("books.html", books_list=books_list)
+
+
+@app.route("/books/<int:id>")
+def book_id(id):
+    if id > len(books_list):
+        return redirect(url_for("home"))
+    return render_template("book_detail.html", book_detail=books_list[id-1])
 
 
 @app.route("/student/<int:id>")
